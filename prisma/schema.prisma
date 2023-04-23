@@ -1,0 +1,30 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Users {
+  id         String    @id @default(uuid())
+  name       String
+  email      String    @unique
+  password   String
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+  deleted_at DateTime?
+
+  @@map("users")
+}
+
+model Pokemons {
+  id          String @id @default(uuid())
+  id_poke_api Int    @unique
+  name        String
+  weight      Int
+  height      Int
+
+  @@map("pokemons")
+}
