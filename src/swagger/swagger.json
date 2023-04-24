@@ -1,0 +1,366 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Zuvia API",
+    "description": "Api to Zuvia test",
+    "contact": {
+      "name": "Alan Henrique",
+      "email": "alancamargo50@gmail.com"
+    },
+    "version": "1",
+    "servers": [
+      {
+        "url": "http://localhost:3333/v1",
+        "description": "Api test"
+      }
+    ]
+  },
+  "paths": {
+    "/sessions": {
+      "post": {
+        "summary": "Sign in user",
+        "description": "Route to sign in user",
+        "tags": ["Sessions"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Session"
+              }
+            }
+          }
+        },
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          },
+          "201": {
+            "description": "User logged",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/SessionResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users": {
+      "post": {
+        "summary": "Create a new user",
+        "description": "Route to create a new user",
+        "tags": ["Users"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            }
+          }
+        },
+        "responses": {
+          "401": {
+            "description": "Unauthorized by email exists"
+          },
+          "201": {
+            "description": "User created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/UserResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Update logged user",
+        "summary": "Update logged user",
+        "tags": ["Users"],
+        "security": [{ "bearerAuth ": [] }],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserUpdate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "401": {
+            "description": "Unauthorized by token"
+          },
+          "201": {
+            "description": "User updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/UserResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/pokemons": {
+      "get": {
+        "summary": "List all pokemons",
+        "description": "List all pokemons in local database",
+        "tags": ["Pokemons"],
+        "security": [{ "bearerAuth ": [] }],
+        "responses": {
+          "401": {
+            "description": "Unauthorized by token"
+          },
+          "200": {
+            "description": "Lista all pokemons",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PokemonResponseArray"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a new pokemon",
+        "description": "Route to create a new pokemon",
+        "tags": ["Pokemons"],
+        "security": [{ "bearerAuth ": [] }],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Pokemon"
+              }
+            }
+          }
+        },
+        "responses": {
+          "401": {
+            "description": "Unauthorized by 'id_poke_api' exists in local database or token"
+          },
+          "201": {
+            "description": "Pokemon created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/PokemonResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Update pokemon",
+        "summary": "Update pokemon",
+        "tags": ["Pokemons"],
+        "security": [{ "bearerAuth ": [] }],
+        "parameters": [
+          {
+            "name": "pokemon_id",
+            "in": "route param",
+            "description": "Id pokemon in database local",
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Pokemon"
+              }
+            }
+          }
+        },
+        "responses": {
+          "401": {
+            "description": "Unauthorized by 'id_poke_api' exists in local database or token"
+          },
+          "200": {
+            "description": "pokemon updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/PokemonResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Session": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      },
+      "SessionResponse": {
+        "type": "object",
+        "properties": {
+          "user": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string"
+              }
+            }
+          },
+          "token": {
+            "type": "string"
+          }
+        }
+      },
+      "User": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      },
+      "UserResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "created_at": {
+            "type": "string"
+          },
+          "updated_at": {
+            "type": "string"
+          },
+          "deleted_at": {
+            "type": "string"
+          }
+        }
+      },
+      "UserUpdate": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "old_password": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      },
+      "PokemonResponseArray": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "id_poke_api": {
+            "type": "number"
+          },
+          "name": {
+            "type": "string"
+          },
+          "weight": {
+            "type": "number"
+          },
+          "height": {
+            "type": "number"
+          }
+        }
+      },
+      "Pokemon": {
+        "type": "object",
+        "properties": {
+          "id_poke_api": {
+            "type": "number"
+          },
+          "name": {
+            "type": "string"
+          },
+          "weight": {
+            "type": "number"
+          },
+          "height": {
+            "type": "number"
+          }
+        }
+      },
+      "PokemonResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "id_poke_api": {
+            "type": "number"
+          },
+          "name": {
+            "type": "string"
+          },
+          "weight": {
+            "type": "number"
+          },
+          "height": {
+            "type": "number"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}
