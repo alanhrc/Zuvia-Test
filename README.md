@@ -21,6 +21,7 @@
 - Mongodb
 - SQlite
 - Jest
+- Swagger
 
 ## Installation
 
@@ -81,6 +82,40 @@ $ npm run test
 
 </br>
 
+## Prisma Studio
+
+```bash
+# Prisma studio interface
+
+$ npx prisma studio
+
+# Open port http://localhost:5555 to view database
+```
+
+<p align="center">
+  <img src="assets/prisma_studio.png" />
+</p>
+
+<p align="center">
+  <img src="assets/prisma_studio2.png" />
+</p>
+
+</br>
+
+## Docs Swagger
+
+```bash
+# Swagger docs
+
+$ url http://localhost:3333/docs to view documentation
+```
+
+<p align="center">
+  <img src="assets/docs.png" />
+</p>
+
+</br>
+
 ### Contains a file `Insomnia` with routes and params project to test manually, you can import file
 
 </br>
@@ -125,4 +160,12 @@ $ npm run test
 
 <p align="center">
   <img src="assets/find_pokemon.png" />
+</p>
+
+<p align="center">
+  <img src="assets/find_one_pokemon.png" />
+</p>
+
+<p align="center">
+  <img src="assets/delete_pokemon.png" />
 </p>
