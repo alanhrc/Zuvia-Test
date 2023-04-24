@@ -166,6 +166,41 @@
             }
           }
         }
+      }
+    },
+    "/pokemons/:pokemon_id": {
+      "get": {
+        "summary": "List a pokemon",
+        "description": "List a pokemon in local database",
+        "tags": ["Pokemons"],
+        "security": [{ "bearerAuth ": [] }],
+        "parameters": [
+          {
+            "name": "pokemon_id",
+            "in": "route param",
+            "description": "Id pokemon in database local",
+            "required": true
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized by token"
+          },
+          "404": {
+            "description": "Unauthorized by 'pokemon_id' not exists in local database"
+          },
+          "200": {
+            "description": "Lista a pokemon",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/PokemonResponse"
+                }
+              }
+            }
+          }
+        }
       },
       "put": {
         "description": "Update pokemon",
@@ -194,7 +229,7 @@
             "description": "Unauthorized by 'id_poke_api' exists in local database or token"
           },
           "200": {
-            "description": "pokemon updated",
+            "description": "Pokemon updated",
             "content": {
               "application/json": {
                 "schema": {
@@ -203,6 +238,31 @@
                 }
               }
             }
+          }
+        }
+      },
+      "delete": {
+        "description": "Delete pokemon",
+        "summary": "Delete pokemon in local database",
+        "tags": ["Pokemons"],
+        "security": [{ "bearerAuth ": [] }],
+        "parameters": [
+          {
+            "name": "pokemon_id",
+            "in": "route param",
+            "description": "Id pokemon in database local",
+            "required": true
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized by token"
+          },
+          "404": {
+            "description": "Unauthorized by 'pokemon_id' not exists in local database"
+          },
+          "204": {
+            "description": "Pokemon deleted"
           }
         }
       }
