@@ -3,12 +3,13 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "mongodb"
   url      = env("DATABASE_URL")
 }
 
 model Users {
-  id         String    @id @default(uuid())
+  id         String    @id @default(auto()) @map("_id") @db.ObjectId // use mongodb
+  // id         String    @id @default(uuid()) // use sqlite
   name       String
   email      String    @unique
   password   String
@@ -20,7 +21,8 @@ model Users {
 }
 
 model Pokemons {
-  id          String @id @default(uuid())
+  id          String @id @default(auto()) @map("_id") @db.ObjectId // use mongodb
+  // id          String @id @default(uuid()) // use sqlite
   id_poke_api Int    @unique
   name        String
   weight      Int
