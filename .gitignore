@@ -2,6 +2,7 @@ node_modules
 dist
 coverage
 docker/volumes
+prisma/zuvia_dev.db
 
 # Keep environment variables out of version control
 .env
